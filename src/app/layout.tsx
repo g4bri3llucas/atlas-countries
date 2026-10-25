@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/site-header";
 import { StoreProvider } from "@/components/store-provider";
 import "./globals.css";
 
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="min-h-screen antialiased">
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <SiteHeader />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
