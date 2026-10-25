@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CompareButton } from "@/components/compare-button";
 import { TripStatusButtons } from "@/components/trip-status-buttons";
 import { getAllCountries, getCountryByCode } from "@/lib/countries/api";
 import { getRegionLabel, getSubregionLabel } from "@/lib/countries/filters";
@@ -106,6 +107,10 @@ export default async function CountryPage({ params }: CountryPageProps) {
       </header>
 
       <TripStatusButtons code={country.code} countryName={country.name} />
+
+      <div className="mt-3">
+        <CompareButton item={{ code: country.code, name: country.name }} />
+      </div>
 
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
         {details.map((detail) => (

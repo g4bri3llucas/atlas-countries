@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompareBar } from "@/components/compare-bar";
 import { SiteHeader } from "@/components/site-header";
 import { StoreProvider } from "@/components/store-provider";
 import "./globals.css";
@@ -19,10 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="min-h-screen antialiased">
+      <body className="flex min-h-screen flex-col antialiased">
         <StoreProvider>
           <SiteHeader />
-          {children}
+          <div className="flex-1">{children}</div>
+          <CompareBar />
         </StoreProvider>
       </body>
     </html>
