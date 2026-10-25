@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { TripStatusButtons } from "@/components/trip-status-buttons";
 import { getAllCountries, getCountryByCode } from "@/lib/countries/api";
 import { formatNumber } from "@/lib/format";
 
@@ -32,6 +33,7 @@ export async function generateMetadata({
     description: `Conheça ${country.name}: capital, população, área, idiomas e moedas.`,
   };
 }
+
 export default async function CountryPage({ params }: CountryPageProps) {
   const { code } = await params;
   const country = await getCountryByCode(code);
@@ -99,6 +101,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
           </p>
         </div>
       </header>
+
+      <TripStatusButtons code={country.code} countryName={country.name} />
 
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
         {details.map((detail) => (
