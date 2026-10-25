@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TripStatusButtons } from "@/components/trip-status-buttons";
 import { getAllCountries, getCountryByCode } from "@/lib/countries/api";
+import { getRegionLabel, getSubregionLabel } from "@/lib/countries/filters";
 import { formatNumber } from "@/lib/format";
 
 type CountryPageProps = {
@@ -42,14 +43,16 @@ export default async function CountryPage({ params }: CountryPageProps) {
     notFound();
   }
 
+  const regionText = [
+    country.region ? getRegionLabel(country.region) : "",
+    country.subregion ? getSubregionLabel(country.subregion) : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   const details = [
     { label: "Capital", value: country.capital ?? "Não informada" },
-    {
-      label: "Região",
-      value:
-        [country.region, country.subregion].filter(Boolean).join(" · ") ||
-        "Não informada",
-    },
+    { label: "Região", value: regionText || "Não informada" },
     {
       label: "População",
       value:
