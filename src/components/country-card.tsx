@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TripStatusBadge } from "@/components/trip-status-badge";
 import { getRegionLabel } from "@/lib/countries/filters";
 import type { Country } from "@/types/country";
 
@@ -18,6 +19,7 @@ export function CountryCard({ country }: CountryCardProps) {
           {country.capital ?? "Capital não informada"} ·{" "}
           {getRegionLabel(country.region)}
         </span>
+        <TripStatusBadge code={country.code} />
       </Link>
     </li>
   );
