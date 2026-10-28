@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { MAX_COMPARE_ITEMS } from "./constants";
 
-export const MAX_COMPARE_ITEMS = 3;
+export { MAX_COMPARE_ITEMS };
 
 export type CompareItem = {
   code: string;
