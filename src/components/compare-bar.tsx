@@ -1,9 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import {
   MAX_COMPARE_ITEMS,
-  useCompareStore,
-} from "@/lib/compare/compare-store";
+  MIN_COMPARE_ITEMS,
+} from "@/lib/compare/constants";
+import { useCompareStore } from "@/lib/compare/compare-store";
+import { buildCompareHref } from "@/lib/compare/url";
 
 export function CompareBar() {
   const items = useCompareStore((state) => state.items);
@@ -13,6 +16,8 @@ export function CompareBar() {
   if (items.length === 0) {
     return null;
   }
+
+  const canCompare = items.length >= MIN_COMPARE_ITEMS;
 
   return (
     <aside
@@ -49,13 +54,30 @@ export function CompareBar() {
           </p>
         ) : null}
 
-        <button
-          type="button"
-          onClick={clear}
-          className="ml-auto rounded text-sm font-medium text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
-        >
-          Limpar
-        </button>
+        {!canCompare ? (
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            {`Selecione pelo menos ${MIN_COMPARE_ITEMS} países para comparar.`}
+          </p>
+        ) : null}
+
+        <div className="ml-auto flex items-center gap-4">
+          {canCompare ? (
+            <Link
+              href={buildCompareHref(items.map((item) => item.code))}
+              className="rounded bg-blue-700 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            >
+              Comparar
+            </Link>
+          ) : null}
+
+          <button
+            type="button"
+            onClick={clear}
+            className="rounded text-sm font-medium text-blue-700 underline underline-offset-4 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+          >
+            Limpar
+          </button>
+        </div>
       </div>
     </aside>
   );
